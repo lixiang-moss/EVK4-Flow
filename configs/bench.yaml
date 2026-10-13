@@ -1,0 +1,20 @@
+# Same-process CPU EventCube pipeline. Empty serial selects one device.
+camera:
+  serial: ""
+  biases: {}
+  roi: null
+
+tensor:
+  representation: openeb_event_cube
+  window_us: 20000
+  bins: 5
+  split_polarity: true
+  output_size: [1280, 720]
+  max_incr_per_pixel: 5.0
+  clip_value: 1.0
+  spatial_normalization: none
+
+runtime:
+  event_queue_mib: 256
+  max_backlog_us: 20000
+  max_tensor_wait_us: 20000

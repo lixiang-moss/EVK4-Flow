@@ -1,0 +1,12 @@
+/build/
+__pycache__/
+*.pyc
+.venv/
+*.raw
+*.hdf5
+*.dat
+
+# Local historical documents; only the formal design and delivery docs are published.
+/EVK4-STREAM_产品与架构设计.md
+/使用教程_设计版.md
+/算法方对接确认清单.md

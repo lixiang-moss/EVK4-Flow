@@ -1,0 +1,19 @@
+# Functional checks for the small synthetic RAW fixture, NOT a latency profile.
+# SDK file decoding arrives in bursts; half-size tensors keep NumPy smoke scans light.
+camera:
+  serial: ""
+  biases: {}
+  roi: null
+tensor:
+  representation: openeb_event_cube
+  window_us: 20000
+  bins: 5
+  split_polarity: true
+  output_size: [640, 360]
+  max_incr_per_pixel: 5.0
+  clip_value: 1.0
+  spatial_normalization: none
+runtime:
+  event_queue_mib: 4
+  max_backlog_us: 2000000
+  max_tensor_wait_us: 2000000

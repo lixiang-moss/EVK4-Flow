@@ -1,4 +1,4 @@
-#include "evk4_stream/pipeline.hpp"
+#include "evk4_flow/pipeline.hpp"
 
 #include <algorithm>
 #include <chrono>
@@ -7,7 +7,7 @@
 #include <metavision/sdk/core/algorithms/event_buffer_reslicer_algorithm.h>
 #include <metavision/sdk/core/preprocessors/event_cube_processor.h>
 
-namespace evk4_stream {
+namespace evk4_flow {
 namespace {
 using Processor = Metavision::EventCubeProcessor<const EventInput *>;
 using Reslicer = Metavision::EventBufferReslicerAlgorithm;
@@ -144,4 +144,4 @@ void TensorBuilder::finish() {
     impl_->finished = true; // Deliberately do not call reslicer.flush().
 }
 
-} // namespace evk4_stream
+} // namespace evk4_flow

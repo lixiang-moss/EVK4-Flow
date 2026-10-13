@@ -6,12 +6,12 @@
 #include <string>
 #include <vector>
 
-#include "evk4_stream/pipeline.hpp"
+#include "evk4_flow/pipeline.hpp"
 
-using evk4_stream::Config;
-using evk4_stream::EventInput;
-using evk4_stream::PacketMeta;
-using evk4_stream::TensorBuilder;
+using evk4_flow::Config;
+using evk4_flow::EventInput;
+using evk4_flow::PacketMeta;
+using evk4_flow::TensorBuilder;
 
 namespace {
 

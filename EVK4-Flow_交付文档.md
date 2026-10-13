@@ -1,8 +1,8 @@
-# EVK4-STREAM 交付文档：算法接入与 API 使用说明
+# EVK4-Flow 交付文档：算法接入与 API 使用说明
 
 日期：2026-10-14 · 版本：v1.2
 
-关联：[设计文档](EVK4-STREAM_设计文档.md)
+关联：[设计文档](EVK4-Flow_设计文档.md)
 
 本文面向接入 EVK4 数据的算法开发者。项目负责相机采集和 tensor 构造，算法程序通过 Python API 取得完整输入，再调用模型。采集、构造与算法在同一个 Docker 容器、同一个应用进程中运行。
 
@@ -179,7 +179,7 @@ ROI 和输出尺寸不同：ROI 在设备支持的区域内选取事件；`outpu
 
 双极性通道索引为 `c=2*b+p`，其中 `p=0` 是 OFF、`p=1` 是 ON。关闭双极性分离后，通道为 `b`，OFF 为负贡献、ON 为正贡献。
 
-每个事件按其时间向相邻时间 bin 线性分配贡献，按配置缩放并在每次更新时裁剪。默认 20 ms／5 bins 的中心位于窗内 2、6、10、14、18 ms；例如窗内 8 ms 的 ON 事件，在原尺寸、默认参数下向 bin 1 和 bin 2 的 ON 通道各贡献 0.1。落在窗口外的 bin 权重按 EventCube 规则舍弃，不借用相邻窗口，也不重新归一化边缘权重。处理器的具体数值规则见[设计文档的张量构建说明](EVK4-STREAM_设计文档.md)。
+每个事件按其时间向相邻时间 bin 线性分配贡献，按配置缩放并在每次更新时裁剪。默认 20 ms／5 bins 的中心位于窗内 2、6、10、14、18 ms；例如窗内 8 ms 的 ON 事件，在原尺寸、默认参数下向 bin 1 和 bin 2 的 ON 通道各贡献 0.1。落在窗口外的 bin 权重按 EventCube 规则舍弃，不借用相邻窗口，也不重新归一化边缘权重。处理器的具体数值规则见[设计文档的张量构建说明](EVK4-Flow_设计文档.md)。
 
 这是完成累积和约定缩放的输入。算法端不要再次执行同一套体素构造或重复除以 `max_incr_per_pixel`。如果模型还需要其他标准化规则，在输入对齐时明确其公式及执行位置。
 
@@ -415,7 +415,7 @@ def run_model(model, handle_result, *, config_path, device, expected_shape,
 ./scripts/dev.sh run --config configs/bench.yaml --smoke --samples 20
 ```
 
-默认开发镜像为 `evk4-stream:dev`。脚本将项目挂载到 `/workspace`，构建产物在项目 `build/`；Python 路径已经包含 `/workspace/python` 和 `/workspace/build`。`devices` 和 `run` 自动寻找 EVK4 USB 节点并映射给容器，宿主仍需具有该节点的访问权限。多设备时用 `EVK4_USB_DEVICE` 选择 USB 节点，并在 YAML 中指定对应序列号。
+默认开发镜像为 `evk4-flow:dev`。脚本将项目挂载到 `/workspace`，构建产物在项目 `build/`；Python 路径已经包含 `/workspace/python` 和 `/workspace/build`。`devices` 和 `run` 自动寻找 EVK4 USB 节点并映射给容器，宿主仍需具有该节点的访问权限。多设备时用 `EVK4_USB_DEVICE` 选择 USB 节点，并在 YAML 中指定对应序列号。
 
 输出为逐行 JSON：`info` 给出实际输入与设备设置，`sample` 给出前 20 份摘要，`smoke` 表示首批检查结果，`status` 给出接收统计，最终 `summary` 包含整次运行结果和时延分位数。采样分位数最多统计最近 4096 份输入；`timing_sample_count` 给出实际数量。
 
@@ -479,7 +479,7 @@ with Pipeline(config_path="configs/replay-check.yaml",
 ./scripts/build.sh --runtime
 docker run --rm --init \
   --device /dev/bus/usb/004/003 \
-  evk4-stream:runtime run --smoke --samples 20
+  evk4-flow:runtime run --smoke --samples 20
 ```
 
 将 USB 节点替换为本机设备路径。运行镜像包含 SDK、应用与配置，入口为 `python3 -m evk4_pipeline`。它使用同一 Pipeline；内置命令为 `devices`、`run` 和 `replay`。
@@ -491,7 +491,7 @@ docker run --rm --init \
   --device /dev/bus/usb/004/003 \
   --mount "type=bind,source=$(pwd)/algorithm,target=/algorithm,readonly" \
   --entrypoint python3 \
-  evk4-stream:runtime /algorithm/receive_demo.py
+  evk4-flow:runtime /algorithm/receive_demo.py
 ```
 
 运行镜像的工作目录为 `/opt/evk4`，默认 `configs/bench.yaml` 指向镜像内配置。使用自定义配置时另外挂载该文件，并把容器内路径传给 `Pipeline(config_path=...)`。这个命令只示范已存在模块的 CPU 接收方式；模型依赖和 GPU 环境仍需按第 3 节准备。

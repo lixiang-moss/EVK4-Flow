@@ -1,4 +1,4 @@
-# EVK4-STREAM
+# EVK4-Flow
 
 基于 OpenEB 5.2.0 的 EVK4 采集与 tensor 供数程序，使用 Docker 开发和运行。
 
@@ -17,7 +17,7 @@ EVK4 / RAW → 官方 SDK 采集与解码 → 有界事件队列
 
 默认 20 ms 窗口、5 个时间 bin、OFF/ON 分离，输出 `[10,720,1280]`；另支持 `[10,360,640]`。连续交付，积压或消费超时会明确结束供数。当前提供 CLI。
 
-详细说明：[设计文档](EVK4-STREAM_设计文档.md) · [交付文档与 API](EVK4-STREAM_交付文档.md)
+详细说明：[设计文档](EVK4-Flow_设计文档.md) · [交付文档与 API](EVK4-Flow_交付文档.md)
 
 ## 环境与构建
 
@@ -79,7 +79,7 @@ EVK4_DATA_DIR=/path/to/recordings ./scripts/dev.sh replay \
 EVK4_USB_DEVICE=/dev/bus/usb/004/003 ./scripts/dev.sh exec python3 examples/consume.py
 ```
 
-数组为只读视图，仅在 `with pipeline.read(...)` 上下文内使用；保存或异步使用时复制。完整 API、字段和适配示例见[交付文档](EVK4-STREAM_交付文档.md)。
+数组为只读视图，仅在 `with pipeline.read(...)` 上下文内使用；保存或异步使用时复制。完整 API、字段和适配示例见[交付文档](EVK4-Flow_交付文档.md)。
 
 ## 独立运行镜像
 
@@ -87,7 +87,7 @@ EVK4_USB_DEVICE=/dev/bus/usb/004/003 ./scripts/dev.sh exec python3 examples/cons
 ./scripts/build.sh --runtime
 docker run --rm --init \
   --device /dev/bus/usb/004/003 \
-  evk4-stream:runtime run --smoke --samples 20
+  evk4-flow:runtime run --smoke --samples 20
 ```
 
 替换为本机 USB 路径。运行镜像包含 SDK、应用和默认配置，无需挂载源码。

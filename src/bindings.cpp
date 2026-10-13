@@ -2,10 +2,10 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include "evk4_stream/pipeline.hpp"
+#include "evk4_flow/pipeline.hpp"
 
 namespace py = pybind11;
-using namespace evk4_stream;
+using namespace evk4_flow;
 
 PYBIND11_MODULE(_evk4_pipeline, m) {
     py::register_exception<StreamEnded>(m, "StreamEnded");

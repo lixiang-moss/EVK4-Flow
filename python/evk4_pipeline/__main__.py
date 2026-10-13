@@ -89,7 +89,7 @@ def run(args):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="EVK4-STREAM: acquisition → EventCube → consumer")
+    parser = argparse.ArgumentParser(description="EVK4-Flow: acquisition → EventCube → consumer")
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("devices", help="List camera serial numbers")
     for name in ("run", "replay"):

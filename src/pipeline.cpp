@@ -1,4 +1,4 @@
-#include "evk4_stream/pipeline.hpp"
+#include "evk4_flow/pipeline.hpp"
 
 #include <algorithm>
 #include <chrono>
@@ -11,7 +11,7 @@
 #include <metavision/hal/facilities/i_roi.h>
 #include <metavision/sdk/stream/camera.h>
 
-namespace evk4_stream {
+namespace evk4_flow {
 namespace {
 constexpr std::size_t block_event_count = 4096;
 using Clock = std::chrono::steady_clock;
@@ -462,4 +462,4 @@ std::vector<std::string> Pipeline::list_devices() {
     return devices;
 }
 
-} // namespace evk4_stream
+} // namespace evk4_flow

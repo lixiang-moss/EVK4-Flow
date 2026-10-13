@@ -2,7 +2,7 @@
 set -euo pipefail
 
 project_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
-dev_image=${EVK4_DEV_IMAGE:-evk4-stream:dev}
+dev_image=${EVK4_DEV_IMAGE:-evk4-flow:dev}
 mode=${1:-dev}
 
 case "$mode" in
@@ -18,7 +18,7 @@ case "$mode" in
   --runtime)
     docker build --target runtime -f "$project_dir/docker/Dockerfile" \
       --build-arg "OPENEB_IMAGE=${OPENEB_IMAGE:-hppr:capture-jammy}" \
-      -t "${EVK4_RUNTIME_IMAGE:-evk4-stream:runtime}" "$project_dir"
+      -t "${EVK4_RUNTIME_IMAGE:-evk4-flow:runtime}" "$project_dir"
     ;;
   *)
     echo 'Usage: scripts/build.sh [dev | --image-only | --runtime]' >&2

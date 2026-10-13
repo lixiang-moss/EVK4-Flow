@@ -12,7 +12,7 @@
 
 #include <metavision/sdk/base/events/event_cd.h>
 
-namespace evk4_stream {
+namespace evk4_flow {
 
 using EventInput = Metavision::EventCD;
 
@@ -125,4 +125,4 @@ private:
     std::unique_ptr<Impl> impl_;
 };
 
-} // namespace evk4_stream
+} // namespace evk4_flow

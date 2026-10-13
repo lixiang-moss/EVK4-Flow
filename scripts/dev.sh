@@ -53,4 +53,4 @@ case "$command" in
   exec) app_command=("$@") ;;
   *) app_command=(python3 -m evk4_pipeline "$command" "$@") ;;
 esac
-exec docker "${docker_args[@]}" "${EVK4_DEV_IMAGE:-evk4-stream:dev}" "${app_command[@]}"
+exec docker "${docker_args[@]}" "${EVK4_DEV_IMAGE:-evk4-flow:dev}" "${app_command[@]}"

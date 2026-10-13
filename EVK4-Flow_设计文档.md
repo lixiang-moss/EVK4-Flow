@@ -1,10 +1,10 @@
-# EVK4-STREAM 设计文档
+# EVK4-Flow 设计文档
 
 日期：2026-10-14 · 版本：v1.2
 
 状态：已实现 Docker 下的 EVK4 采集、EventCube 构建与冒烟消费者；GUI 和正式算法接入留待后续。当前验证属于短时链路与数值检查，不构成实时性保证。
 
-构建、实机启动和 RAW 回放命令见 [README](README.md)。算法接入、API、配置与验证记录见[交付文档](EVK4-STREAM_交付文档.md)。
+构建、实机启动和 RAW 回放命令见 [README](README.md)。算法接入、API、配置与验证记录见[交付文档](EVK4-Flow_交付文档.md)。
 
 本项目采用一个应用进程、三个逻辑模块：复用 OpenEB 的采集、分窗和体素处理能力，只增加必要的事件缓冲、线程调度、内存所有权和算法接入代码。目标是为机械臂的视觉算法持续提供符合约定的输入，并限制数据积压。
 
@@ -168,7 +168,7 @@ EventCube 的时间分配、边缘权重和逐次裁剪直接沿用选定 SDK �
 
 ## 7 本地 Python 接口与冒烟消费者
 
-接口只表达启动、读取、关闭，固定输入信息在构造后可读取。完整参数、字段、超时与错误约定见[算法接入与 API 使用说明](EVK4-STREAM_交付文档.md)。构造形式为 `Pipeline(config_path, *, input_raw=None)`，进入上下文时启动，退出时关闭；RAW 启用 SDK 的源时间回放节拍，解码回调仍可能成批交付。当前用法：
+接口只表达启动、读取、关闭，固定输入信息在构造后可读取。完整参数、字段、超时与错误约定见[算法接入与 API 使用说明](EVK4-Flow_交付文档.md)。构造形式为 `Pipeline(config_path, *, input_raw=None)`，进入上下文时启动，退出时关闭；RAW 启用 SDK 的源时间回放节拍，解码回调仍可能成批交付。当前用法：
 
 ```python
 from evk4_pipeline import Pipeline, StreamEnded
@@ -278,7 +278,7 @@ bias 可以通过 SDK 调节，但只暴露当前设备支持、范围合法的�
 
 ## 13 实现状态与后续工作
 
-EVK4 采集、事件队列、EventCube 构建、复用数组、Python API、冒烟消费者、Docker 和 CLI 已实现。具体检查与真机短时运行结果见[交付文档](EVK4-STREAM_交付文档.md)。
+EVK4 采集、事件队列、EventCube 构建、复用数组、Python API、冒烟消费者、Docker 和 CLI 已实现。具体检查与真机短时运行结果见[交付文档](EVK4-Flow_交付文档.md)。
 
 | 工作 | 当前状态 | 完成标准 |
 |---|---|---|
